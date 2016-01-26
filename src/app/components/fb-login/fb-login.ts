@@ -23,13 +23,10 @@ export class FbLogin {
   constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef) {
     this.loginState.next(this._fbRef.getAuth() && 'LoggedIn' || 'NotLoggedIn');
     this._fbRef.onAuth(state => {
-      console.log('state change', state);
-      switch(state) {
-        case null:
-          this.loginState.next('NotLoggedIn');
-          break;
-        default:
-          this.loginState.next('LoggedIn');
+      if (!state) {
+        this.loginState.next('NotLoggedIn');
+      } else {
+        this.loginState.next('LoggedIn');
       }
     });
   }
@@ -38,7 +35,6 @@ export class FbLogin {
     this._fbRef.authWithOAuthPopup('github', (err, authData) => {
       if(err) this.loginState.error(err);
     });
-    console.log('now what?');
   }
 
   logout() {

@@ -8,15 +8,14 @@ var merge = require('broccoli-merge-trees');
 module.exports = function(defaults) {
   var app = new Angular2App(defaults);
   return merge(
-    [new Funnel('node_modules/angularfire2', {
-      include: ['**/**'],
-      exclude: ['LICENSE'],
-      destDir: '/vendor/angularfire2/'
+    [new Funnel('node_modules', {
+      include: [
+        'angularfire2/**/*.js',
+        'rxjs/**/*.js',
+        'firebase/**/*.js'],
+      destDir: '/vendor/'
     }),
-    new Funnel('node_modules/firebase/lib', {
-      include: ['**/**'],
-      exclude: ['LICENSE'],
-      destDir: '/vendor/firebase/'
-    }),
-    app.toTree()]);
+    app.toTree()], {
+      overwrite: true
+    });
 }

@@ -12,10 +12,7 @@ export class AngularfireDemo2851App {
   defaultMeaning: number = 42;
 
   meaningOfLife(meaning) {
+    console.log('meaning', meaning);
     return `The meaning of life is ${meaning || this.defaultMeaning}`;
-  }
-
-  loggedIn() {
-    console.log('logged in');
   }
 }

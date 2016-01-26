@@ -20,7 +20,8 @@
     System.config({
       map: {
         'angularfire2': 'vendor/angularfire2/',
-        'firebase': 'vendor/firebase/firebase-web.js'
+        'firebase': 'vendor/firebase/lib/firebase-web.js',
+        'rxjs': 'vendor/rxjs'
       },
       packages: {
         app: {
@@ -31,6 +32,9 @@
           defaultExtension: 'js'
         },
         'firebase': {
+          defaultExtension: 'js'
+        },
+        'rxjs': {
           defaultExtension: 'js'
         }
       }

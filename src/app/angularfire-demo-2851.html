@@ -1,5 +1,12 @@
-<p>
-  angularfire-demo-2851 Works!
-  login state {{evt}}
-  <fb-login (loginState)="loggedIn()"></fb-login>
-</p>
+<fb-login #login></fb-login>
+<div [ngSwitch]="login.loginState | async">
+  <div *ngSwitchWhen="'LoggedIn'">
+    <question></question>
+  </div>
+  <div *ngSwitchWhen="'NotLoggedIn'">
+    Please log in to ask a question
+  </div>
+  <div *ngSwitchDefault>
+    Checking authentication...
+  </div>
+</div>

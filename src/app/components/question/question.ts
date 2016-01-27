@@ -13,21 +13,40 @@ import {PromiseObservable} from 'rxjs/observable/fromPromise';
 })
 export class Question implements AfterViewInit{
   @ViewChild('askQuestion') questionForm:NgForm;
+  lastQuestion:string;
+  lastQuestionError:string;
   constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef:any) {
 
   }
 
   ngAfterViewInit() {
-    var control = this.questionForm.form.controls['question'];
     this.questionForm.ngSubmit
-      .map(() => this.questionForm.form.controls['question'])
-      .flatMap((control) => PromiseObservable
-        .create(<Promise<any>>this._fbRef.child('questions').push({
-          question: this.questionForm.form.controls['question'].value
-        }).then(_ => control)))
-        .subscribe((control:Control) => {
-          control.updateValue('');
-        })
+      .map(_ => {
+        var control = this.questionForm.form.controls['question'];
+        return {
+          control,
+          question: control.value
+        };
+      })
+      .flatMap((wrapper) => {
+        return PromiseObservable
+          .create(<Promise<any>>this._fbRef.child('questions').push({
+            question: wrapper.question
+          })
+          .then(_ => wrapper));
+      })
+      .subscribe((wrapper:ControlAndValue) => {
+        this.lastQuestion = wrapper.question;
+        this.lastQuestionError = '';
+        wrapper.control.updateValue('');
+      }, (err:string) => {
+        this.lastQuestionError = err;
+      })
   }
 
+}
+
+interface ControlAndValue {
+  control: Control;
+  question: string;
 }

@@ -1,6 +1,6 @@
 import {Component, Inject, Output, EventEmitter} from 'angular2/core';
 import {DEFAULT_FIREBASE_REF} from 'angularfire2/angularfire';
-import {ReplaySubject} from 'rxjs/Subject/ReplaySubject';
+import {ReplaySubject} from 'rxjs/subject/ReplaySubject';
 
 @Component({
   selector: 'fb-login',

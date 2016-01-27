@@ -10,7 +10,7 @@ enableProdMode();
 
 bootstrap(AngularfireDemo2851App, [
   provide(DEFAULT_FIREBASE, {
-    useValue: 'https://deploytest.firebaseio.com/'
+    useValue: 'https://deploytest.firebaseio.com'
   }),
   FIREBASE_PROVIDERS
 ]);

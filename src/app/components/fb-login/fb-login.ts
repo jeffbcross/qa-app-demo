@@ -18,7 +18,7 @@ import {ReplaySubject} from 'rxjs/subject/ReplaySubject';
   pipes: []
 })
 export class FbLogin {
-  @Output('loginState') loginState:ReplaySubject<string> = new ReplaySubject();
+  loginState:ReplaySubject<string> = new ReplaySubject();
   constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef) {
     this.loginState.next(this._fbRef.getAuth() && 'LoggedIn' || 'NotLoggedIn');
     this._fbRef.onAuth(state => {

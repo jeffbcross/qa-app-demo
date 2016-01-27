@@ -5,7 +5,7 @@ import {ReplaySubject} from 'rxjs/subject/ReplaySubject';
 @Component({
   selector: 'fb-login',
   template: `
-    <div [ngSwitch]="loginState | async">
+    <div [ngSwitch]="(loginState | async).status">
       <button *ngSwitchWhen="'NotLoggedIn'" (click)="login()">Login</button>
       <span *ngSwitchWhen="'LoggedIn'">
         Welcome! <button (click)="logout()">Log out</button>
@@ -18,14 +18,24 @@ import {ReplaySubject} from 'rxjs/subject/ReplaySubject';
   pipes: []
 })
 export class FbLogin {
-  loginState:ReplaySubject<string> = new ReplaySubject();
+  loginState:ReplaySubject<AuthStatus> = new ReplaySubject();
   constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef) {
-    this.loginState.next(this._fbRef.getAuth() && 'LoggedIn' || 'NotLoggedIn');
-    this._fbRef.onAuth(state => {
-      if (!state) {
-        this.loginState.next('NotLoggedIn');
+    var auth = this._fbRef.getAuth();
+    this.loginState.next({
+      status: auth ? 'LoggedIn' : 'NotLoggedIn',
+      auth
+    });
+    this._fbRef.onAuth(auth => {
+      if (!auth) {
+        this.loginState.next({
+          status: 'NotLoggedIn',
+          auth: null
+        });
       } else {
-        this.loginState.next('LoggedIn');
+        this.loginState.next({
+          status: 'LoggedIn',
+          auth: auth
+        });
       }
     });
   }
@@ -39,5 +49,9 @@ export class FbLogin {
   logout() {
     this._fbRef.unauth();
   }
+}
 
+interface AuthStatus {
+  status: string;
+  auth: any;
 }

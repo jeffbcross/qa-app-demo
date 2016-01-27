@@ -1,0 +1,25 @@
+<div>
+  <button class="expand" (click)="expanded = !expanded">{{expanded ? 'collapse' : 'expand'}}</button>
+  <div *ngIf="expanded">
+    <h1>
+      {{question.val().question}}
+    </h1>
+    <h2>Answers</h2>
+    <em *ngIf="!question.val().answers">
+      No answers yet.
+    </em>
+    <ul>
+      <li *ngFor="#answer of question.val().answers">
+        {{answer.answer}}
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!expanded">
+    <p>
+      {{question.val().question}}
+      <span class="numAnswers">
+        {{question.val().answers ? question.val().answers.length : 0}} answer(s)
+      </span>
+    </p>
+  </div>
+</div>

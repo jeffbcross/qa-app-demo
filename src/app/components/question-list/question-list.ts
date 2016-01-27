@@ -1,16 +1,16 @@
 import {Component, Inject} from 'angular2/core';
 import {FirebaseList, FirebaseObservable} from 'angularfire2/angularfire';
+import {QuestionDetail} from '../question-detail/question-detail';
 
 @Component({
   selector: 'question-list',
   template: `
-    <div class="row" *ngFor="#question of questions | async">
-      {{question.val().question}}
-    </div>
+    <question-detail class="row" [question]="question" *ngFor="#question of questions | async">
+    </question-detail>
   `,
-  styles: ['.row {font-weight: bold}'],
+  styles: [],
   providers: [FirebaseList('/questions')],
-  directives: [],
+  directives: [QuestionDetail],
   pipes: []
 })
 export class QuestionList {

@@ -11,7 +11,6 @@ import {ReplaySubject} from 'rxjs/Subject/ReplaySubject';
         Welcome! <button (click)="logout()">Log out</button>
       </span>
     </div>
-
   `,
   styleUrls: ['app/components/fb-login/fb-login.css'],
   providers: [],

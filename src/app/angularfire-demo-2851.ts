@@ -1,11 +1,12 @@
 import {Component} from 'angular2/core';
 import {FbLogin} from './components/fb-login/fb-login';
+import {Question} from './components/question/question';
 
 @Component({
   selector: 'angularfire-demo-2851-app',
   providers: [],
   templateUrl: 'app/angularfire-demo-2851.html',
-  directives: [FbLogin],
+  directives: [FbLogin, Question],
   pipes: []
 })
 export class AngularfireDemo2851App {

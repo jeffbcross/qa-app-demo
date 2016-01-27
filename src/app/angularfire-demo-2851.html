@@ -1,5 +1,5 @@
-<fb-login #login></fb-login>
-<div [ngSwitch]="(login.loginState | async).status">
+<fb-login></fb-login>
+<div [ngSwitch]="(auth.loginState | async).status">
   <div *ngSwitchWhen="'LoggedIn'">
     <question></question>
   </div>

@@ -1,6 +1,7 @@
 import {provide, enableProdMode} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
 import {AngularfireDemo2851App} from './app/angularfire-demo-2851';
+import {Auth} from './app/services/auth-state/auth-state';
 import {FIREBASE_PROVIDERS, DEFAULT_FIREBASE} from 'angularfire2/angularfire';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/do';
@@ -12,5 +13,6 @@ bootstrap(AngularfireDemo2851App, [
   provide(DEFAULT_FIREBASE, {
     useValue: 'https://deploytest.firebaseio.com'
   }),
+  Auth,
   FIREBASE_PROVIDERS
 ]);

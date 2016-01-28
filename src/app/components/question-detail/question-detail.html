@@ -1,31 +1,49 @@
-<div class="root">
-  <button class="expand" (click)="expanded = !expanded">{{expanded ? 'collapse' : 'expand'}}</button>
-  <div *ngIf="expanded">
-    <h1>
-      {{question.val().question}}
-    </h1>
 
-    <h2>Answers</h2>
-    <em *ngIf="!question.val().answers">
-      No answers yet.
-    </em>
-    <ul>
-      <li *ngFor="#answer of getAnswers(question)">
-        {{answer.answer}}
-      </li>
-    </ul>
+<button class="btn btn-primary pull-right"
+        type="button"
+        (click)="expanded = true"
+        *ngIf="!expanded">
+  Answers
+  <span class="badge">
+    {{countAnswers(question)}}
+  </span>
+</button>
+
+<button class="expand close pull-right"
+        *ngIf="expanded"
+        (click)="expanded = false">
+  &times;
+</button>
+<div *ngIf="expanded">
+
+
+  <h1>
+    {{question.val().question}}
+  </h1>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">Answers</div>
+    <div class="panel-body">
+      <em *ngIf="!question.val().answers">
+        No answers yet.
+      </em>
+      <ul>
+        <li *ngFor="#answer of getAnswers(question)">
+          {{answer.answer}}
+        </li>
+      </ul>
+    </div>
   </div>
-  <div *ngIf="!expanded">
-    <p>
-      {{question.val().question}}
-      <span class="numAnswers">
-        {{countAnswers(question)}} answer(s)
-      </span>
-    </p>
-  </div>
-  <h3>Answer the Question</h3>
-  <form #answerForm="ngForm">
-      <textarea ngControl="answer"></textarea>
-      <button>Answer</button>
-    </form>
 </div>
+<div *ngIf="!expanded">
+  <p>
+    {{question.val().question}}
+  </p>
+</div>
+
+<form #answerForm="ngForm" [hidden]="!expanded">
+  <h3>Answer the Question</h3>
+  <textarea ngControl="answer"></textarea>
+  <button>Answer</button>
+</form>
+

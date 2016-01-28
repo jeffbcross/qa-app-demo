@@ -9,8 +9,7 @@ import {Auth} from '../../services/auth-state/auth-state';
 
 @Component({
   selector: 'question-detail',
-  templateUrl: 'app/components/question-detail/question-detail.html',
-  styles: ['div.root {border:1px solid #ccc}', 'button.expand {float:right;}']
+  templateUrl: 'app/components/question-detail/question-detail.html'
 })
 export class QuestionDetail implements AfterViewInit {
   @ViewChild('answerForm') answerForm:NgForm;

@@ -4,17 +4,28 @@
   </div>
 </nav>
 
-<div [ngSwitch]="(auth.loginState | async).status">
-  <div *ngSwitchWhen="'LoggedIn'">
-    <question></question>
-  </div>
-  <div *ngSwitchWhen="'NotLoggedIn'">
-    Please log in to ask a question
-  </div>
-  <div *ngSwitchDefault>
-    Checking authentication...
-  </div>
-</div>
+<div class="container-fluid">
+  <div [ngSwitch]="(auth.loginState | async).status">
 
-<h1>Questions</h1>
-<question-list></question-list>
+
+    <div *ngSwitchWhen="'LoggedIn'">
+      <question></question>
+    </div>
+
+
+    <div *ngSwitchWhen="'NotLoggedIn'">
+      <div class="alert alert-info" role="alert">
+        Please log in to ask or answer a question
+      </div>
+    </div>
+
+
+    <div *ngSwitchDefault>
+      Checking authentication...
+    </div>
+  </div>
+
+
+  <h1>Questions</h1>
+  <question-list></question-list>
+</div>

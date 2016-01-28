@@ -8,8 +8,10 @@ import {QuestionDetail} from '../question-detail/question-detail';
 @Component({
   selector: 'question-list',
   template: `
-    <question-detail class="row" [question]="question" *ngFor="#question of questions | async">
-    </question-detail>
+    <ul class="list-group">
+      <question-detail class="list-group-item" [question]="question" *ngFor="#question of questions | async">
+      </question-detail>
+    </ul>
   `,
   providers: [FirebaseList('/questions')],
   directives: [QuestionDetail],

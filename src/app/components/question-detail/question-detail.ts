@@ -1,9 +1,13 @@
 import {AfterViewInit, Component, Inject, Input, ViewChild} from 'angular2/core';
 import {Control, NgForm} from 'angular2/common';
 import {PromiseObservable} from 'rxjs/observable/fromPromise';
-import {DEFAULT_FIREBASE_REF} from 'angularfire2/angularfire';
+import {
+  DEFAULT_FIREBASE,
+  DEFAULT_FIREBASE_REF,
+  FirebaseObservable
+} from 'angularfire2/angularfire';
 import {Auth} from '../../services/auth-state/auth-state';
-
+import {FirebaseListFactory} from 'angularfire2/providers/firebase_list';
 
 
 
@@ -17,8 +21,14 @@ export class QuestionDetail implements AfterViewInit {
   expanded:boolean = false;
   lastAnswer: string;
   lastAnswerError: string;
+  answers:FirebaseObservable<any>;
 
-  constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef:any, private _auth:Auth) {}
+  constructor(
+    @Inject(DEFAULT_FIREBASE_REF) private _fbRef:any,
+    @Inject(DEFAULT_FIREBASE) private _root:string,
+    private _auth:Auth) {
+
+  }
 
   countAnswers(question):number {
     var answers = this.getAnswers(question);
@@ -35,6 +45,8 @@ export class QuestionDetail implements AfterViewInit {
   }
 
   ngAfterViewInit () {
+    this.answers = FirebaseListFactory(`${this._root}/questions/${this.question.key()}/answers`)
+
     this.answerForm.ngSubmit
       .map(_ => {
         var control = this.answerForm.form.controls['answer'];

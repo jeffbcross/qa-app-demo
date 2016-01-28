@@ -7,9 +7,10 @@ import {ReplaySubject} from 'rxjs/subject/ReplaySubject';
 export class Auth {
   loginState:ReplaySubject<AuthStatus> = new ReplaySubject();
   private _auth;
+
+
   constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef) {
     var auth = this._auth = this._fbRef.getAuth();
-    console.log(this._fbRef.getAuth())
     this.loginState.next({
       status: auth ? 'LoggedIn' : 'NotLoggedIn',
       auth

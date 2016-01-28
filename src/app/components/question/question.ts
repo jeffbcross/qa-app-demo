@@ -10,13 +10,25 @@ import {Auth} from '../../services/auth-state/auth-state';
 @Component({
   selector: 'question',
   template: `
-    Ask a Question
-    <form #askQuestion="ngForm">
-      <input ngControl="question">
-      <button>Ask</button>
+    <h2>Ask a Question</h2>
+    <form class="form form-inline" #askQuestion="ngForm">
+      <div class="form-group form-group-lg">
+        <label class="control-label"
+               for="question">
+          Question
+        </label>
+
+        <input class="form-control input-lg" ngControl="question">
+
+        <button class="btn btn-primary btn-lg">
+          Ask
+        </button>
+      </div>
+
       <p *ngIf="lastQuestionError">
         Something Went Wrong: {{lastQuestionError}}
       </p>
+
       <p *ngIf="lastQuestion">
         Question Posted: {{lastQuestion}}
       </p>

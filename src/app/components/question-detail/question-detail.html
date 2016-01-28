@@ -42,8 +42,9 @@
 </div>
 
 <form #answerForm="ngForm" [hidden]="!expanded">
-  <h3>Answer the Question</h3>
-  <textarea ngControl="answer"></textarea>
-  <button>Answer</button>
+  <div class="form-group">
+    <label for="answer">Answer the Question</label>
+    <textarea class="form-control" ngControl="answer"></textarea>
+  </div>
+  <button class="btn btn-primary">Answer</button>
 </form>
-

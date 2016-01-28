@@ -3,6 +3,8 @@ import {Control, NgForm} from 'angular2/common';
 import {PromiseObservable} from 'rxjs/observable/fromPromise';
 import {DEFAULT_FIREBASE_REF} from 'angularfire2/angularfire';
 
+import {Auth} from '../../services/auth-state/auth-state';
+
 @Component({
   selector: 'question-detail',
   templateUrl: 'app/components/question-detail/question-detail.html',
@@ -18,7 +20,7 @@ export class QuestionDetail implements AfterViewInit {
   lastAnswer: string;
   lastAnswerError: string;
 
-  constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef:any) {}
+  constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef:any, private _auth:Auth) {}
 
   countAnswers(question):number {
     var answers = this.getAnswers(question);
@@ -47,7 +49,8 @@ export class QuestionDetail implements AfterViewInit {
           .create(<Promise<any>>this._fbRef
             .child(`questions/${this.question.key()}/answers`)
             .push({
-              answer: wrapper.answer
+              answer: wrapper.answer,
+              author: this._auth.auth.uid
             })))
       .subscribe((wrapper:ControlAndValue) => {
         this.lastAnswer = wrapper.answer;

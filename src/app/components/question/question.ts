@@ -3,6 +3,8 @@ import {NgForm, Control} from 'angular2/common';
 import {DEFAULT_FIREBASE_REF} from 'angularfire2/angularfire';
 import {PromiseObservable} from 'rxjs/observable/fromPromise';
 
+import {Auth} from '../../services/auth-state/auth-state';
+
 @Component({
   selector: 'question',
   templateUrl: 'app/components/question/question.html',
@@ -15,7 +17,7 @@ export class Question implements AfterViewInit{
   @ViewChild('askQuestion') questionForm:NgForm;
   lastQuestion:string;
   lastQuestionError:string;
-  constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef:any) {
+  constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef:any, private _auth:Auth) {
 
   }
 
@@ -29,9 +31,11 @@ export class Question implements AfterViewInit{
         };
       })
       .flatMap((wrapper) => {
+        console.log(this._auth.auth.github.username);
         return PromiseObservable
           .create(<Promise<any>>this._fbRef.child('questions').push({
-            question: wrapper.question
+            question: wrapper.question,
+            author: this._auth.auth.uid
           })
           .then(_ => wrapper));
       })

@@ -6,13 +6,16 @@ import {ReplaySubject} from 'rxjs/subject/ReplaySubject';
 @Injectable()
 export class Auth {
   loginState:ReplaySubject<AuthStatus> = new ReplaySubject();
+  private _auth;
   constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef) {
-    var auth = this._fbRef.getAuth();
+    var auth = this._auth = this._fbRef.getAuth();
+    console.log(this._fbRef.getAuth())
     this.loginState.next({
       status: auth ? 'LoggedIn' : 'NotLoggedIn',
       auth
     });
     this._fbRef.onAuth(auth => {
+      this._auth = auth;
       this.loginState.next({
         status: auth ? 'LoggedIn' : 'NotLoggedIn',
         auth
@@ -28,6 +31,10 @@ export class Auth {
 
   logout() {
     this._fbRef.unauth();
+  }
+
+  get auth():any {
+    return this._auth;
   }
 }
 

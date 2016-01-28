@@ -1,4 +1,9 @@
-<fb-login></fb-login>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <fb-login class="col-lg-12 pull-right"></fb-login>
+  </div>
+</nav>
+
 <div [ngSwitch]="(auth.loginState | async).status">
   <div *ngSwitchWhen="'LoggedIn'">
     <question></question>

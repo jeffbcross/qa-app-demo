@@ -9,10 +9,25 @@ import {Auth} from '../../services/auth-state/auth-state';
 @Component({
   selector: 'fb-login',
   template: `
-    <div [ngSwitch]="(auth.loginState | async).status">
-      <button *ngSwitchWhen="'NotLoggedIn'" (click)="auth.login()">Login</button>
+    <div [ngSwitch]="(auth.loginState | async).status"
+         class="collapse navbar-collapse">
+
+
+      <button type="button"
+              class="btn btn-default navbar-btn"
+              *ngSwitchWhen="'NotLoggedIn'"
+              (click)="auth.login()">
+        Login
+      </button>
+
+
       <span *ngSwitchWhen="'LoggedIn'">
-        Welcome! <button (click)="auth.logout()">Log out</button>
+        Welcome!
+        <button type="button"
+                class="btn"
+                (click)="auth.logout()">
+          Log out
+        </button>
       </span>
     </div>
   `

@@ -11,6 +11,7 @@ module.exports = function(defaults) {
     [new Funnel('node_modules', {
       include: [
         'angularfire2/**/*.js',
+        'bootstrap/**/*.css',
         'rxjs/**/*.js',
         'firebase/**/*.js'],
       destDir: '/vendor/'

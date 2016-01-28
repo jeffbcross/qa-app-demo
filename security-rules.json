@@ -1,0 +1,41 @@
+{
+    "rules": {
+      ".read": true,
+      ".write": false,
+      "questions": {
+        "$question": {
+          // only the author can edit this question, any authenticated user can add a question
+          ".write": "(auth !== null && !data.exists()) || data.child('author').val() === auth.uid",
+          // required fields: question, author
+          ".validate": "newData.hasChildren(['question', 'author'])",
+          "question": {
+            ".validate": "newData.isString() && newData.val().length < 10000"
+          },
+          // I can only set author to my own id
+          "author": {
+            ".validate": "newData.val() === auth.uid"
+          },
+          "answers": {
+            ".validate": "newData.hasChildren()", // is a collection and not a primitive
+            "$answer": {
+              // required fields: answer, author
+              ".validate": "newData.hasChildren(['answer', 'author'])",
+              // can write if I'm the question author (because of cascading .write under $question)
+              // or if this is a new answer (because !data.exists())
+              // or if I am the author of the answer
+              ".write": "(auth !== null && !data.exists()) || data.child('author').val() === auth.uid",
+              "answer": {
+                ".validate": "newData.isString() && newData.val().length < 10000"
+              },
+              // author must be my id or unchanged (if I'm the question author)
+              "author": {
+                ".validate": "newData.val() === auth.uid || newData.val() === data.val()"
+              },
+              "$others": { ".validate": false }
+            }
+          },
+          "$others": { ".validate": false }
+        }
+      }
+    }
+}

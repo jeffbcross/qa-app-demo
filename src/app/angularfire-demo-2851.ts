@@ -4,13 +4,22 @@ import {Question} from './components/question/question';
 import {QuestionList} from './components/question-list/question-list';
 import {Auth} from './services/auth-state/auth-state';
 
+
+
+
+
+
+
 @Component({
   selector: 'angularfire-demo-2851-app',
-  providers: [],
   templateUrl: 'app/angularfire-demo-2851.html',
-  directives: [FbLogin, Question, QuestionList],
-  pipes: []
+  directives: [FbLogin, Question, QuestionList]
 })
+
+
+
+
+
 export class AngularfireDemo2851App {
   constructor(public auth:Auth) {}
 }

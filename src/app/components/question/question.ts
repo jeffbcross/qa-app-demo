@@ -2,24 +2,37 @@ import {AfterViewInit, Component, Inject, ViewChild} from 'angular2/core';
 import {NgForm, Control} from 'angular2/common';
 import {DEFAULT_FIREBASE_REF} from 'angularfire2/angularfire';
 import {PromiseObservable} from 'rxjs/observable/fromPromise';
-
 import {Auth} from '../../services/auth-state/auth-state';
+
+
+
 
 @Component({
   selector: 'question',
-  templateUrl: 'app/components/question/question.html',
-  styleUrls: ['app/components/question/question.css'],
-  providers: [],
-  directives: [],
-  pipes: []
+  template: `
+    Ask a Question
+    <form #askQuestion="ngForm">
+      <input ngControl="question">
+      <button>Ask</button>
+      <p *ngIf="lastQuestionError">
+        Something Went Wrong: {{lastQuestionError}}
+      </p>
+      <p *ngIf="lastQuestion">
+        Question Posted: {{lastQuestion}}
+      </p>
+    </form>
+  `
 })
 export class Question implements AfterViewInit{
   @ViewChild('askQuestion') questionForm:NgForm;
   lastQuestion:string;
   lastQuestionError:string;
+
+
   constructor(@Inject(DEFAULT_FIREBASE_REF) private _fbRef:any, private _auth:Auth) {
 
   }
+
 
   ngAfterViewInit() {
     this.questionForm.ngSubmit
@@ -47,7 +60,6 @@ export class Question implements AfterViewInit{
         this.lastQuestionError = err;
       })
   }
-
 }
 
 interface ControlAndValue {

@@ -6,8 +6,11 @@ import {FIREBASE_PROVIDERS, DEFAULT_FIREBASE} from 'angularfire2/angularfire';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
-
 enableProdMode();
+
+
+
+
 
 bootstrap(AngularfireDemo2851App, [
   provide(DEFAULT_FIREBASE, {

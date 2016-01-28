@@ -2,16 +2,15 @@ import {AfterViewInit, Component, Inject, Input, ViewChild} from 'angular2/core'
 import {Control, NgForm} from 'angular2/common';
 import {PromiseObservable} from 'rxjs/observable/fromPromise';
 import {DEFAULT_FIREBASE_REF} from 'angularfire2/angularfire';
-
 import {Auth} from '../../services/auth-state/auth-state';
+
+
+
 
 @Component({
   selector: 'question-detail',
   templateUrl: 'app/components/question-detail/question-detail.html',
-  styles: ['div.root {border:1px solid #ccc}', 'button.expand {float:right;}'],
-  providers: [],
-  directives: [],
-  pipes: []
+  styles: ['div.root {border:1px solid #ccc}', 'button.expand {float:right;}']
 })
 export class QuestionDetail implements AfterViewInit {
   @ViewChild('answerForm') answerForm:NgForm;

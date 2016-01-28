@@ -23,15 +23,18 @@ export class Auth {
     });
   }
 
+
   login() {
     this._fbRef.authWithOAuthPopup('github', (err, authData) => {
       if(err) this.loginState.error(err);
     });
   }
 
+
   logout() {
     this._fbRef.unauth();
   }
+
 
   get auth():any {
     return this._auth;
